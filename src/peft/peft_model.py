@@ -1077,6 +1077,13 @@ class PeftModelForCausalLM(PeftModel):
                     return_dict=return_dict,
                     **kwargs,
                 )
+            
+            # our own model
+            if self.base_model.config.model_type == "t4rec_model":
+                return self.base_model(
+                    inputs=input_ids,
+                    **kwargs,
+                )
 
             if peft_config.peft_type == PeftType.POLY:
                 kwargs["task_ids"] = task_ids
